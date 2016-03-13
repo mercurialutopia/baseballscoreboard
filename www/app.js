@@ -13,6 +13,10 @@ angular.module('scoreBoardApp', [])
 	scoreBoard.correctionModeOn = false;
 	scoreBoard.history = [];
 	scoreBoard.historyOn = true;
+	scoreBoard.nameEdit = {
+		homeTeamName: scoreBoard.homeTeamName,
+		visitorTeamName: scoreBoard.visitorTeamName
+	};
 	
 	function snapshotState() {
 		// generally history is always saved. This flag is used primarily when starting a new game.
@@ -186,5 +190,13 @@ angular.module('scoreBoardApp', [])
 		}
 	};
 	
+	scoreBoard.editNames = function() {
+		scoreBoard.nameEdit.homeTeamName = scoreBoard.homeTeamName;
+		scoreBoard.nameEdit.visitorTeamName = scoreBoard.visitorTeamName;
+	};
+	scoreBoard.saveNames = function() {
+		scoreBoard.homeTeamName = scoreBoard.nameEdit.homeTeamName;
+		scoreBoard.visitorTeamName = scoreBoard.nameEdit.visitorTeamName;
+	};
 	
   });

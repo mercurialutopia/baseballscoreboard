@@ -25,12 +25,10 @@
 				  </button>
 				  <a class="navbar-brand" href="#">Baseball Score Board</a>
 				</div>
-
-				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse" id="controlBar">
 				  <ul class="nav navbar-nav">
-					<li ng-class='{active: scoreBoard.isCorrectionModeMode()}'><a href="#" ng-click="scoreBoard.toggleCorrectionMode()">Correction <span class="sr-only" ng-if="scoreBoard.isCorrectionMode()">(on)</span></a></li>
-					<li ng-class='{disabled: scoreBoard.history.length == 0 }'><a href="#" ng-click="scoreBoard.revertState()">Undo</a></li>
+					<li ng-class="{'active': scoreBoard.correctionModeOn == true}"><a href="#" ng-click="scoreBoard.toggleCorrectionMode()">Correction <span class="sr-only" ng-if="scoreBoard.isCorrectionMode()">(on)</span></a></li>
+					<li ng-class="{'disabled': scoreBoard.history.length == 0 }"><a href="#" ng-click="scoreBoard.revertState()">Undo</a></li>
 					<li><a href="#" data-toggle="modal" data-target="#nameEditModal" ng-click="scoreBoard.editNames()">Edit Team Names</a></li>
 				  </ul>
 				  <ul class="nav navbar-nav navbar-right">
@@ -162,8 +160,8 @@
 						</div>
 					</div>
 				</div>
-				
 			</div>
+			
 		</div>
 	</body>
 </html>

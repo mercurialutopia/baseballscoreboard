@@ -23,8 +23,10 @@ angular.module('scoreBoardApp', [])
 		if(scoreBoard.historyOn) {
 			// create a new state object containing all of the current values, and store it in the history
 			var state = {};
+			state.homeTeamName = scoreBoard.homeTeamName;
 			state.homeScore = scoreBoard.homeScore;
 			state.visitorScore = scoreBoard.visitorScore;
+			state.visitorTeamName = scoreBoard.visitorTeamName;
 			state.inning = scoreBoard.inning;
 			state.isTopOfInning = scoreBoard.isTopOfInning;
 			state.outs = scoreBoard.outs;
@@ -41,7 +43,9 @@ angular.module('scoreBoardApp', [])
 		if(scoreBoard.history.length > 0) { // if there is a previous state
 			//pull the previous state and set all values
 			var state = scoreBoard.history.pop();
+			scoreBoard.homeTeamName = state.homeTeamName;
 			scoreBoard.homeScore = state.homeScore;
+			scoreBoard.visitorTeamName = state.visitorTeamName;
 			scoreBoard.visitorScore = state.visitorScore;
 			scoreBoard.inning = state.inning;
 			scoreBoard.isTopOfInning = state.isTopOfInning;
@@ -191,6 +195,7 @@ angular.module('scoreBoardApp', [])
 			setBSO(0,0,0);
 			// don't start a game in correction mode
 			setCorrectionMode(false);
+			saveTeamNames("Home", "Visitor");
 			
 			// the game is reset, turn the history back on
 			scoreBoard.historyOn = true;
@@ -202,11 +207,14 @@ angular.module('scoreBoardApp', [])
 		scoreBoard.nameEdit.visitorTeamName = scoreBoard.visitorTeamName;
 	};
 	scoreBoard.saveNames = function() {
-		scoreBoard.homeTeamName = scoreBoard.nameEdit.homeTeamName;
-		scoreBoard.visitorTeamName = scoreBoard.nameEdit.visitorTeamName;
-		var update = { homeTeamName: scoreBoard.nameEdit.homeTeamName, visitorTeamName: scoreBoard.nameEdit.visitorTeamName };
-		socket.emit('boardUpdate', update);
+		saveTeamNames(scoreBoard.nameEdit.homeTeamName, scoreBoard.nameEdit.visitorTeamName);
 	};
+	function saveTeamNames(homeTeamName, visitorTeamName) {
+		scoreBoard.homeTeamName = homeTeamName;
+		scoreBoard.visitorTeamName = visitorTeamName;
+		var update = { homeTeamName: homeTeamName, visitorTeamName: visitorTeamName };
+		socket.emit('boardUpdate', update);
+	}
 	
 	socket.on('init', function (data) {
 		var keys = Object.keys(data);

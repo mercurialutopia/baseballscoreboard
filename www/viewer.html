@@ -1,0 +1,97 @@
+<html ng-app="scoreBoardApp">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Score Board</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+		<link rel="stylesheet" href="site.css">
+		<script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+		<script src="/socket.io/socket.io.js"></script>
+		<script src="viewerApp.js"></script>
+	</head>
+	<body>
+		<div ng-controller="ScoreBoardController as scoreBoard">
+			<nav class="navbar navbar-default">
+			  <div class="container-fluid">
+				<div class="navbar-header">
+				  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#controlBar" aria-expanded="false">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				  </button>
+				  <a class="navbar-brand" href="#">Baseball Score Board</a>
+				</div>
+				<div class="collapse navbar-collapse" id="controlBar">
+				</div>
+			  </div>
+			</nav>
+			<div class="container">
+				<div class="">
+					<div class="col-xs-12 col-sm-4 col-sm-push-4">
+						<div class="h4">Inning</div>
+						<div>
+							<span ng-if='scoreBoard.isTopOfInning' class="sr-only">Top of </span>
+							<span ng-if='!scoreBoard.isTopOfInning' class="sr-only">Bottom of </span>
+							<span class="h4">{{scoreBoard.inning}}</span>
+							<span ng-if='scoreBoard.isTopOfInning' class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span>
+							<span ng-if='!scoreBoard.isTopOfInning' class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
+						</div>
+					</div>
+					<div class="col-xs-6 col-sm-4 col-sm-pull-4">
+						<div class="h4">{{scoreBoard.visitorTeamName}}</div>
+						<div>
+							<span class="h4">{{scoreBoard.visitorScore}}</span>
+						</div>
+					</div>
+					<div class="col-xs-6 col-sm-4">
+						<div class="h4">{{scoreBoard.homeTeamName}}</div>
+						<div>
+							<span class="h4">{{scoreBoard.homeScore}}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="container">
+				<div class="">
+					<div class="row col-xs-6">
+						<div class="col-xs-12 col-sm-6">
+							<div class="h4">Ball</div>
+							<div>
+								<span ng-class="{lightOff: scoreBoard.balls == 0}" class="glyphicon glyphicon-stop" aria-hidden="true"></span>
+								<span ng-class="{lightOff: scoreBoard.balls <= 1}" class="glyphicon glyphicon-stop" aria-hidden="true"></span>
+								<span ng-class="{lightOff: scoreBoard.balls <= 2}" class="glyphicon glyphicon-stop" aria-hidden="true"></span>
+								<span class="sr-only">{{scoreBoard.balls}} balls</span>
+							</div>
+						</div>
+						<div class="col-xs-12 col-sm-6">
+							<div class="h4">Strike</div>
+							<div>
+								<span ng-class="{lightOff: scoreBoard.strikes == 0}" class="glyphicon glyphicon-stop" aria-hidden="true"></span>
+								<span ng-class="{lightOff: scoreBoard.strikes <= 1}" class="glyphicon glyphicon-stop" aria-hidden="true"></span>
+								<span class="sr-only">{{scoreBoard.strikes}} strikes</span>
+							</div>
+						</div>
+					</div>
+					<div class="row col-xs-6">
+						<div class="col-xs-12 col-sm-6">
+							<div class="h4">Out</div>
+							<div>
+								<span ng-class="{lightOff: scoreBoard.outs == 0}" class="glyphicon glyphicon-stop" aria-hidden="true"></span>
+								<span ng-class="{lightOff: scoreBoard.outs <= 1}" class="glyphicon glyphicon-stop" aria-hidden="true"></span>
+								<span class="sr-only">{{scoreBoard.outs}} outs</span>
+							</div>
+						</div>
+						<div class="col-xs-12 col-sm-6">
+							<div class="h5">&nbsp;</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

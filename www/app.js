@@ -208,6 +208,12 @@ angular.module('scoreBoardApp', [])
 		socket.emit('boardUpdate', update);
 	};
 	
+	socket.on('init', function (data) {
+		var keys = Object.keys(data);
+		for(var i = 0; i < keys.length; i++) {
+			scoreBoard[keys[i]] = data[keys[i]];
+		}
+	});
 	
   }])
   .factory('socket', function ($rootScope) {

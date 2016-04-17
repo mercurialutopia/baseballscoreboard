@@ -1,5 +1,5 @@
 angular.module('scoreBoardApp', [])
-  .controller('ScoreBoardController', function() {
+  .controller('ScoreBoardController', ['socket', function(socket) {
     var scoreBoard = this;
 	scoreBoard.homeTeamName = "Home";
     scoreBoard.homeScore = 0;
@@ -25,8 +25,8 @@ angular.module('scoreBoardApp', [])
 			var state = {};
 			state.homeTeamName = scoreBoard.homeTeamName;
 			state.homeScore = scoreBoard.homeScore;
-			state.visitorTeamName = scoreBoard.visitorTeamName;
 			state.visitorScore = scoreBoard.visitorScore;
+			state.visitorTeamName = scoreBoard.visitorTeamName;
 			state.inning = scoreBoard.inning;
 			state.isTopOfInning = scoreBoard.isTopOfInning;
 			state.outs = scoreBoard.outs;
@@ -52,6 +52,7 @@ angular.module('scoreBoardApp', [])
 			scoreBoard.outs = state.outs;
 			scoreBoard.strikes = state.strikes;
 			scoreBoard.balls = state.balls;
+			socket.emit('boardUpdate', state);
 		}
 	}
  
@@ -77,13 +78,17 @@ angular.module('scoreBoardApp', [])
 			outs = 0;
 		// if the outs, strikes, or balls has changed, save the changes.
 		if(scoreBoard.outs != outs || scoreBoard.strikes != strikes || scoreBoard.balls != balls) {
-			if(changeInning) // changing the inning will create a snapshot, so only create a snapshot here if not changing the inning
+			if(changeInning) { // changing the inning will create a snapshot, so only create a snapshot here if not changing the inning
 				scoreBoard.nextHalfInning();
-			else
+			}
+			else {
 				snapshotState();
+			}
 			scoreBoard.outs = outs;
 			scoreBoard.strikes = strikes;
 			scoreBoard.balls = balls;
+			var update = { balls: balls, strikes: strikes, outs: outs };
+			socket.emit('boardUpdate', update);
 		}
 	}
     scoreBoard.addStrike = function() {
@@ -112,6 +117,8 @@ angular.module('scoreBoardApp', [])
 		if(score >= 0) { // teams may not have a score below zero
 			snapshotState();
 			scoreBoard.homeScore = score;
+			var update = { homeScore: score };
+			socket.emit('boardUpdate', update);
 		}
 	}
 	scoreBoard.addRunHome = function() {
@@ -124,6 +131,8 @@ angular.module('scoreBoardApp', [])
 		if(score >= 0) { // teams may not have a score below zero
 			snapshotState();
 			scoreBoard.visitorScore = score;
+			var update = { visitorScore: score };
+			socket.emit('boardUpdate', update);
 		}
 	}
 	scoreBoard.addRunVisitor = function() {
@@ -137,6 +146,8 @@ angular.module('scoreBoardApp', [])
 			snapshotState();
 			scoreBoard.inning = inning;
 			scoreBoard.isTopOfInning = isTop;
+			var update = { inning: inning, isTopOfInning: isTop };
+			socket.emit('boardUpdate', update);
 		}
 	}
 	scoreBoard.nextHalfInning = function() {
@@ -184,6 +195,7 @@ angular.module('scoreBoardApp', [])
 			setBSO(0,0,0);
 			// don't start a game in correction mode
 			setCorrectionMode(false);
+			saveTeamNames("Home", "Visitor");
 			
 			// the game is reset, turn the history back on
 			scoreBoard.historyOn = true;
@@ -195,8 +207,43 @@ angular.module('scoreBoardApp', [])
 		scoreBoard.nameEdit.visitorTeamName = scoreBoard.visitorTeamName;
 	};
 	scoreBoard.saveNames = function() {
-		scoreBoard.homeTeamName = scoreBoard.nameEdit.homeTeamName;
-		scoreBoard.visitorTeamName = scoreBoard.nameEdit.visitorTeamName;
+		saveTeamNames(scoreBoard.nameEdit.homeTeamName, scoreBoard.nameEdit.visitorTeamName);
 	};
+	function saveTeamNames(homeTeamName, visitorTeamName) {
+		scoreBoard.homeTeamName = homeTeamName;
+		scoreBoard.visitorTeamName = visitorTeamName;
+		var update = { homeTeamName: homeTeamName, visitorTeamName: visitorTeamName };
+		socket.emit('boardUpdate', update);
+	}
 	
-  });
+	socket.on('init', function (data) {
+		var keys = Object.keys(data);
+		for(var i = 0; i < keys.length; i++) {
+			scoreBoard[keys[i]] = data[keys[i]];
+		}
+	});
+	
+  }])
+  .factory('socket', function ($rootScope) {
+  var socket = io.connect();
+  return {
+    on: function (eventName, callback) {
+      socket.on(eventName, function () {  
+        var args = arguments;
+        $rootScope.$apply(function () {
+          callback.apply(socket, args);
+        });
+      });
+    },
+    emit: function (eventName, data, callback) {
+      socket.emit(eventName, data, function () {
+        var args = arguments;
+        $rootScope.$apply(function () {
+          if (callback) {
+            callback.apply(socket, args);
+          }
+        });
+      })
+    }
+  };
+});

@@ -17,6 +17,9 @@ angular.module('scoreBoardApp', [])
 		homeTeamName: scoreBoard.homeTeamName,
 		visitorTeamName: scoreBoard.visitorTeamName
 	};
+	scoreBoard.runnerOnFirst = false;
+	scoreBoard.runnerOnSecond = false;
+	scoreBoard.runnerOnThird = false;
 	
 	function snapshotState() {
 		// generally history is always saved. This flag is used primarily when starting a new game.
@@ -32,6 +35,9 @@ angular.module('scoreBoardApp', [])
 			state.outs = scoreBoard.outs;
 			state.strikes = scoreBoard.strikes;
 			state.balls = scoreBoard.balls;
+			state.runnerOnFirst = scoreBoard.runnerOnFirst;
+			state.runnerOnSecond = scoreBoard.runnerOnSecond;
+			state.runnerOnThird = scoreBoard.runnerOnThird;
 			scoreBoard.history.push(state);
 			// if there are more than 5 previous states in the history, remove the oldest one
 			if(scoreBoard.history.length > 5)
@@ -52,6 +58,9 @@ angular.module('scoreBoardApp', [])
 			scoreBoard.outs = state.outs;
 			scoreBoard.strikes = state.strikes;
 			scoreBoard.balls = state.balls;
+			scoreBoard.runnerOnFirst = state.runnerOnFirst;
+			scoreBoard.runnerOnSecond = state.runnerOnSecond;
+			scoreBoard.runnerOnThird = state.runnerOnThird;
 			socket.emit('boardUpdate', state);
 		}
 	}
@@ -164,6 +173,25 @@ angular.module('scoreBoardApp', [])
 			setInning(scoreBoard.inning-1, false);
 		} else { // if it is the bottom of the inning then is will become the top of the same inning
 			setInning(scoreBoard.inning, true);
+		}
+	};
+	scoreBoard.runnerOn = function(base) {
+		switch(base) {
+			case 1:
+				scoreBoard.runnerOnFirst = !scoreBoard.runnerOnFirst;
+				var update = { runnerOnFirst: scoreBoard.runnerOnFirst };
+				socket.emit('boardUpdate', update);
+				break;
+			case 2:
+				scoreBoard.runnerOnSecond = !scoreBoard.runnerOnSecond;
+				var update = { runnerOnSecond: scoreBoard.runnerOnSecond };
+				socket.emit('boardUpdate', update);
+				break;
+			case 3:
+				scoreBoard.runnerOnThird = !scoreBoard.runnerOnThird;
+				var update = { runnerOnThird: scoreBoard.runnerOnThird };
+				socket.emit('boardUpdate', update);
+				break;
 		}
 	};
 	function setCorrectionMode(correctionModeOn) {

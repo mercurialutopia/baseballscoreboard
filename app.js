@@ -27,7 +27,10 @@ var scoreBoard = {
 	isTopOfInning: true,
 	outs: 0,
 	strikes: 0,
-	balls: 0
+	balls: 0,
+	runnerOnFirst: false,
+	runnerOnSecond: false,
+	runnerOnThird: false
 };
 
 io.on('connection', function(socket){

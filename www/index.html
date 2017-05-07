@@ -43,7 +43,7 @@
 					<div class="col-xs-12 col-sm-4 col-sm-push-4">
 						<div class="h4">Inning</div>
 						<div>
-							<button type="button" ng-click="scoreBoard.previousHalfInning()" class="btn btn-default" ng-class="{disabled : (scoreBoard.inning == 1 && scoreBoard.isTopOfInning) }" aria-label="Inning Previous Half" ng-if="scoreBoard.isCorrectionMode()">
+							<button type="button" ng-click="scoreBoard.previousHalfInning()" class="btn btn-default btn-lg" ng-class="{disabled : (scoreBoard.inning == 1 && scoreBoard.isTopOfInning) }" aria-label="Inning Previous Half" ng-if="scoreBoard.isCorrectionMode()">
 								<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
 							</button>
 							<span ng-if='scoreBoard.isTopOfInning' class="sr-only">Top of </span>
@@ -51,33 +51,35 @@
 							<span class="h4">{{scoreBoard.inning}}</span>
 							<span ng-if='scoreBoard.isTopOfInning' class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span>
 							<span ng-if='!scoreBoard.isTopOfInning' class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
-							<button type="button" ng-click="scoreBoard.nextHalfInning()" class="btn btn-default" aria-label="Inning Next Half" ng-if="scoreBoard.isCorrectionMode()">
+							<button type="button" ng-click="scoreBoard.nextHalfInning()" class="btn btn-default btn-lg" aria-label="Inning Next Half" ng-if="scoreBoard.isCorrectionMode()">
 								<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 							</button>
 						</div>
 					</div>
 					<div class="col-xs-6 col-sm-4 col-sm-pull-4">
-						<div class="h4">{{scoreBoard.visitorTeamName}}</div>
+						<div class="h4"><b>V</b> {{scoreBoard.visitorTeamName}}</div>
 						<div>
-							<button type="button" ng-click="scoreBoard.addRunVisitor()" class="btn btn-default" aria-label="Visitor Score Plus One" ng-if="!scoreBoard.isCorrectionMode()">
+							<button type="button" ng-click="scoreBoard.addRunVisitor()" class="btn btn-default btn-lg col-xs-9" aria-label="Visitor Score Plus One" ng-if="!scoreBoard.isCorrectionMode()">
 								<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+								<span class="h4">{{scoreBoard.visitorScore}}</span>
 							</button>
-							<button type="button" ng-click="scoreBoard.removeRunVisitor()" class="btn btn-default" ng-class="{disabled: scoreBoard.visitorScore == 0}" aria-label="Visitor Score Minus One" ng-if="scoreBoard.isCorrectionMode()">
+							<button type="button" ng-click="scoreBoard.removeRunVisitor()" class="btn btn-default btn-lg col-xs-9" ng-class="{disabled: scoreBoard.visitorScore == 0}" aria-label="Visitor Score Minus One" ng-if="scoreBoard.isCorrectionMode()">
 								<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+								<span class="h4">{{scoreBoard.visitorScore}}</span>
 							</button>
-							<span class="h4">{{scoreBoard.visitorScore}}</span>
 						</div>
 					</div>
 					<div class="col-xs-6 col-sm-4">
-						<div class="h4">{{scoreBoard.homeTeamName}}</div>
+						<div class="h4"><b>H</b> {{scoreBoard.homeTeamName}}</div>
 						<div>
-							<button type="button" ng-click="scoreBoard.addRunHome()" class="btn btn-default" aria-label="Home Score Plus One" ng-if="!scoreBoard.isCorrectionMode()">
+							<button type="button" ng-click="scoreBoard.addRunHome()" class="btn btn-default btn-lg col-xs-9" aria-label="Home Score Plus One" ng-if="!scoreBoard.isCorrectionMode()">
 								<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+								<span class="h4">{{scoreBoard.homeScore}}</span>
 							</button>
-							<button type="button" ng-click="scoreBoard.removeRunHome()" class="btn btn-default" ng-class="{disabled: scoreBoard.homeScore == 0}" aria-label="Home Score Minus One" ng-if="scoreBoard.isCorrectionMode()">
+							<button type="button" ng-click="scoreBoard.removeRunHome()" class="btn btn-default btn-lg col-xs-9" ng-class="{disabled: scoreBoard.homeScore == 0}" aria-label="Home Score Minus One" ng-if="scoreBoard.isCorrectionMode()">
 								<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+								<span class="h4">{{scoreBoard.homeScore}}</span>
 							</button>
-							<span class="h4">{{scoreBoard.homeScore}}</span>
 						</div>
 					</div>
 				</div>
@@ -88,29 +90,34 @@
 						<div class="col-xs-12 col-sm-6">
 							<div class="h4">Ball</div>
 							<div>
-								<button type="button" ng-click="scoreBoard.addBall()" class="btn btn-default" aria-label="Add Ball" ng-if="!scoreBoard.isCorrectionMode()">
+								<button type="button" ng-click="scoreBoard.addBall()" class="btn btn-default btn-lg col-xs-12" aria-label="Add Ball" ng-if="!scoreBoard.isCorrectionMode()">
 									<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+									<span ng-class="{lightOff: scoreBoard.balls == 0}" class="glyphicon glyphicon-stop" aria-hidden="true"></span>
+									<span ng-class="{lightOff: scoreBoard.balls <= 1}" class="glyphicon glyphicon-stop" aria-hidden="true"></span>
+									<span ng-class="{lightOff: scoreBoard.balls <= 2}" class="glyphicon glyphicon-stop" aria-hidden="true"></span>
 								</button>
-								<button type="button" ng-click="scoreBoard.removeBall()" class="btn btn-default" ng-class="{disabled: scoreBoard.balls == 0}" aria-label="Remove Ball" ng-if="scoreBoard.isCorrectionMode()">
+								<button type="button" ng-click="scoreBoard.removeBall()" class="btn btn-default btn-lg col-xs-12" ng-class="{disabled: scoreBoard.balls == 0}" aria-label="Remove Ball" ng-if="scoreBoard.isCorrectionMode()">
 									<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+									<span ng-class="{lightOff: scoreBoard.balls == 0}" class="glyphicon glyphicon-stop" aria-hidden="true"></span>
+									<span ng-class="{lightOff: scoreBoard.balls <= 1}" class="glyphicon glyphicon-stop" aria-hidden="true"></span>
+									<span ng-class="{lightOff: scoreBoard.balls <= 2}" class="glyphicon glyphicon-stop" aria-hidden="true"></span>
 								</button>
-								<span ng-class="{lightOff: scoreBoard.balls == 0}" class="glyphicon glyphicon-stop" aria-hidden="true"></span>
-								<span ng-class="{lightOff: scoreBoard.balls <= 1}" class="glyphicon glyphicon-stop" aria-hidden="true"></span>
-								<span ng-class="{lightOff: scoreBoard.balls <= 2}" class="glyphicon glyphicon-stop" aria-hidden="true"></span>
 								<span class="sr-only">{{scoreBoard.balls}} balls</span>
 							</div>
 						</div>
 						<div class="col-xs-12 col-sm-6">
 							<div class="h4">Strike</div>
 							<div>
-								<button type="button" ng-click="scoreBoard.addStrike()" class="btn btn-default" aria-label="Add Strike" ng-if="!scoreBoard.isCorrectionMode()">
+								<button type="button" ng-click="scoreBoard.addStrike()" class="btn btn-default btn-lg col-xs-12" aria-label="Add Strike" ng-if="!scoreBoard.isCorrectionMode()">
 									<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+									<span ng-class="{lightOff: scoreBoard.strikes == 0}" class="glyphicon glyphicon-stop" aria-hidden="true"></span>
+									<span ng-class="{lightOff: scoreBoard.strikes <= 1}" class="glyphicon glyphicon-stop" aria-hidden="true"></span>
 								</button>
-								<button type="button" ng-click="scoreBoard.removeStrike()" class="btn btn-default" ng-class="{disabled: scoreBoard.strikes == 0}" aria-label="Remove Strike" ng-if="scoreBoard.isCorrectionMode()">
+								<button type="button" ng-click="scoreBoard.removeStrike()" class="btn btn-default btn-lg col-xs-12" ng-class="{disabled: scoreBoard.strikes == 0}" aria-label="Remove Strike" ng-if="scoreBoard.isCorrectionMode()">
 									<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+									<span ng-class="{lightOff: scoreBoard.strikes == 0}" class="glyphicon glyphicon-stop" aria-hidden="true"></span>
+									<span ng-class="{lightOff: scoreBoard.strikes <= 1}" class="glyphicon glyphicon-stop" aria-hidden="true"></span>
 								</button>
-								<span ng-class="{lightOff: scoreBoard.strikes == 0}" class="glyphicon glyphicon-stop" aria-hidden="true"></span>
-								<span ng-class="{lightOff: scoreBoard.strikes <= 1}" class="glyphicon glyphicon-stop" aria-hidden="true"></span>
 								<span class="sr-only">{{scoreBoard.strikes}} strikes</span>
 							</div>
 						</div>
@@ -119,25 +126,30 @@
 						<div class="col-xs-12 col-sm-6">
 							<div class="h4">Out</div>
 							<div>
-								<button type="button" ng-click="scoreBoard.addOut()" class="btn btn-default" aria-label="Add Out" ng-if="!scoreBoard.isCorrectionMode()">
+								<button type="button" ng-click="scoreBoard.addOut()" class="btn btn-default btn-lg col-xs-12" aria-label="Add Out" ng-if="!scoreBoard.isCorrectionMode()">
 									<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+									<span ng-class="{lightOff: scoreBoard.outs == 0}" class="glyphicon glyphicon-stop" aria-hidden="true"></span>
+									<span ng-class="{lightOff: scoreBoard.outs <= 1}" class="glyphicon glyphicon-stop" aria-hidden="true"></span>
 								</button>
-								<button type="button" ng-click="scoreBoard.removeOut()" class="btn btn-default" ng-class="{disabled: scoreBoard.outs == 0}" aria-label="Remove Out" ng-if="scoreBoard.isCorrectionMode()">
+								<button type="button" ng-click="scoreBoard.removeOut()" class="btn btn-default btn-lg col-xs-12" ng-class="{disabled: scoreBoard.outs == 0}" aria-label="Remove Out" ng-if="scoreBoard.isCorrectionMode()">
 									<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+									<span ng-class="{lightOff: scoreBoard.outs == 0}" class="glyphicon glyphicon-stop" aria-hidden="true"></span>
+									<span ng-class="{lightOff: scoreBoard.outs <= 1}" class="glyphicon glyphicon-stop" aria-hidden="true"></span>
 								</button>
-								<span ng-class="{lightOff: scoreBoard.outs == 0}" class="glyphicon glyphicon-stop" aria-hidden="true"></span>
-								<span ng-class="{lightOff: scoreBoard.outs <= 1}" class="glyphicon glyphicon-stop" aria-hidden="true"></span>
 								<span class="sr-only">{{scoreBoard.outs}} outs</span>
 							</div>
 						</div>
 						<div class="col-xs-12 col-sm-6">
 							<div class="h5">&nbsp;</div>
-							<button type="button" ng-click="scoreBoard.newBatter()" class="btn btn-default" aria-label="New Batter">
+							<button type="button" ng-click="scoreBoard.newBatter()" class="btn btn-default btn-lg col-xs-12" aria-label="New Batter">
 								New Batter
 							</button>
 						</div>
 					</div>
 				</div>
+			</div>
+			<div class="container">
+				
 			</div>
 			<div id="nameEditModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="nameEditModalLabel">
 				<div class="modal-dialog modal-sm">
@@ -149,11 +161,11 @@
 						<div class="modal-body">
 							<div class="form-group">
 								<label for="visitorTeamNameEdit">Visitor Team Name</label>
-								<input type="text" class="form-control" id="visitorTeamNameEdit" ng-model="scoreBoard.nameEdit.visitorTeamName"></input>
+								<input type="text" class="form-control" id="visitorTeamNameEdit" ng-model="scoreBoard.nameEdit.visitorTeamName" onclick="this.select()"></input>
 							</div>
 							<div class="form-group">
 								<label for="homeTeamNameEdit">Home Team Name</label>
-								<input type="text" class="form-control" id="homeTeamNameEdit"ng-model="scoreBoard.nameEdit.homeTeamName"></input>
+								<input type="text" class="form-control" id="homeTeamNameEdit"ng-model="scoreBoard.nameEdit.homeTeamName" onclick="this.select()"></input>
 							</div>
 						</div>
 						<div class="modal-footer">

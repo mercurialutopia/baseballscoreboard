@@ -43,13 +43,13 @@
 						</div>
 					</div>
 					<div class="col-xs-6 col-sm-4 col-sm-pull-4">
-						<div class="h4">{{scoreBoard.visitorTeamName}}</div>
+						<div class="h4"><b>V</b> {{scoreBoard.visitorTeamName}}</div>
 						<div>
 							<span class="h4">{{scoreBoard.visitorScore}}</span>
 						</div>
 					</div>
 					<div class="col-xs-6 col-sm-4">
-						<div class="h4">{{scoreBoard.homeTeamName}}</div>
+						<div class="h4"><b>H</b> {{scoreBoard.homeTeamName}}</div>
 						<div>
 							<span class="h4">{{scoreBoard.homeScore}}</span>
 						</div>
@@ -87,8 +87,24 @@
 							</div>
 						</div>
 						<div class="col-xs-12 col-sm-6">
-							<div class="h5">&nbsp;</div>
+							<div class="col-xs-4">
+							<span>&nbsp;</span>
+								<img src="img/runnerNone.png" ng-show="(!scoreBoard.runnerOnFirst && !scoreBoard.runnerOnSecond && !scoreBoard.runnerOnThird )" aria-label="No runners on" />
+								<img src="img/runner1.png" ng-show="(scoreBoard.runnerOnFirst && !scoreBoard.runnerOnSecond && !scoreBoard.runnerOnThird )" aria-label="Runner on first" />
+								<img src="img/runner2.png" ng-show="(!scoreBoard.runnerOnFirst && scoreBoard.runnerOnSecond && !scoreBoard.runnerOnThird )" aria-label="Runner on second" />
+								<img src="img/runner3.png" ng-show="(!scoreBoard.runnerOnFirst && !scoreBoard.runnerOnSecond && scoreBoard.runnerOnThird )" aria-label="Runner on third" />
+								<img src="img/runner12.png" ng-show="(scoreBoard.runnerOnFirst && scoreBoard.runnerOnSecond && !scoreBoard.runnerOnThird )" aria-label="Runners on first and second" />
+								<img src="img/runner13.png" ng-show="(scoreBoard.runnerOnFirst && !scoreBoard.runnerOnSecond && scoreBoard.runnerOnThird )" aria-label="Runners on first and third" />
+								<img src="img/runner23.png" ng-show="(!scoreBoard.runnerOnFirst && scoreBoard.runnerOnSecond && scoreBoard.runnerOnThird )" aria-label="Runners on second and third" />
+								<img src="img/runner123.png" ng-show="(scoreBoard.runnerOnFirst && scoreBoard.runnerOnSecond && scoreBoard.runnerOnThird )" aria-label="Based loaded" />
+							</div>
 						</div>
+					</div>
+				</div>
+			</div>
+			<div class="container">
+				<div class="col-xs-12">
+					<div class="row col-xs-12">
 					</div>
 				</div>
 			</div>

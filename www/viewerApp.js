@@ -10,6 +10,9 @@ angular.module('scoreBoardApp', [])
 	scoreBoard.outs = 0;
 	scoreBoard.strikes = 0;
 	scoreBoard.balls = 0;
+	scoreBoard.runnerOnFirst = false;
+	scoreBoard.runnerOnSecond = false;
+	scoreBoard.runnerOnThird = false;
 	
     function setBSO(strikes, balls, outs) {
 		var changeInning = false;
@@ -36,9 +39,6 @@ angular.module('scoreBoardApp', [])
 			if(changeInning) { // changing the inning will create a snapshot, so only create a snapshot here if not changing the inning
 				scoreBoard.nextHalfInning();
 			}
-			else {
-				snapshotState();
-			}
 			scoreBoard.outs = outs;
 			scoreBoard.strikes = strikes;
 			scoreBoard.balls = balls;
@@ -47,21 +47,18 @@ angular.module('scoreBoardApp', [])
     
 	function setHomeScore(score) {
 		if(score >= 0) { // teams may not have a score below zero
-			snapshotState();
 			scoreBoard.homeScore = score;
 		}
 	}
 	
 	function setVisitorScore(score) {
 		if(score >= 0) { // teams may not have a score below zero
-			snapshotState();
 			scoreBoard.visitorScore = score;
 		}
 	}
 	
 	function setInning(inning, isTop) {
 		if(inning > 0) { // the inning must be at least the first (1)
-			snapshotState();
 			scoreBoard.inning = inning;
 			scoreBoard.isTopOfInning = isTop;
 		}

@@ -20,6 +20,8 @@ angular.module('scoreBoardApp', [])
 	scoreBoard.runnerOnFirst = false;
 	scoreBoard.runnerOnSecond = false;
 	scoreBoard.runnerOnThird = false;
+
+	setInterval(function() { jQuery.ajax(window.location.href); }, 1200000); // 1200000 ms = 20 minutes, This is used for server keep alive. Messages over web sockets don't appear to count. Hopefully it works.
 	
 	function snapshotState() {
 		// generally history is always saved. This flag is used primarily when starting a new game.
@@ -155,7 +157,11 @@ angular.module('scoreBoardApp', [])
 			snapshotState();
 			scoreBoard.inning = inning;
 			scoreBoard.isTopOfInning = isTop;
-			var update = { inning: inning, isTopOfInning: isTop };
+			scoreBoard.runnerOnFirst = false;
+			scoreBoard.runnerOnSecond = false;
+			scoreBoard.runnerOnThird = false;
+			
+			var update = { inning: inning, isTopOfInning: isTop, runnerOnFirst: false, runnerOnSecond: false, runnerOnThird: false };
 			socket.emit('boardUpdate', update);
 		}
 	}
@@ -224,6 +230,10 @@ angular.module('scoreBoardApp', [])
 			// don't start a game in correction mode
 			setCorrectionMode(false);
 			saveTeamNames("Home", "Visitor");
+
+			scoreBoard.runnerOnFirst = false;
+			scoreBoard.runnerOnSecond = false;
+			scoreBoard.runnerOnThird = false;
 			
 			// the game is reset, turn the history back on
 			scoreBoard.historyOn = true;

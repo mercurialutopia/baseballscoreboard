@@ -22,6 +22,11 @@ angular.module('scoreBoardApp', [])
 	scoreBoard.runnerOnThird = false;
 
 	setInterval(function() { jQuery.ajax(window.location.href); }, 1200000); // 1200000 ms = 20 minutes, This is used for server keep alive. Messages over web sockets don't appear to count. Hopefully it works.
+
+	$('.nav a').on('click', function(){
+    $('.btn-navbar').click(); //bootstrap 2.x
+    $('.navbar-toggle').click() //bootstrap 3.x by Richard
+	});
 	
 	function snapshotState() {
 		// generally history is always saved. This flag is used primarily when starting a new game.

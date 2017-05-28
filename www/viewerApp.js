@@ -1,8 +1,8 @@
 angular.module('scoreBoardApp', [])
   .controller('ScoreBoardController', ['socket', function(socket) {
-    var scoreBoard = this;
+	var scoreBoard = this;
 	scoreBoard.homeTeamName = "Home";
-    scoreBoard.homeScore = 0;
+  scoreBoard.homeScore = 0;
 	scoreBoard.visitorTeamName = "Visitor";
 	scoreBoard.visitorScore = 0;
 	scoreBoard.inning = 1;
@@ -14,56 +14,7 @@ angular.module('scoreBoardApp', [])
 	scoreBoard.runnerOnSecond = false;
 	scoreBoard.runnerOnThird = false;
 	
-    function setBSO(strikes, balls, outs) {
-		var changeInning = false;
-		if(balls == 4) { // if there are 4 balls then the player has been walked, reset the count
-			balls = 0;
-			strikes = 0;
-		} else if(balls < 0) // there can be no fewer than zero balls, set to zero instead
-			balls = 0;
-		if(strikes == 3) { // if there are 3 strikes then the player is out, reset the count and add an out
-			balls = 0;
-			strikes = 0;
-			outs += 1;
-		} else if(strikes < 0) // there can be no fewer than zero strikes, set to zero instead
-			strikes = 0;
-		if(outs == 3) { // if there are three outs then the inning half is over, reset the count and outs and go to the next inning
-			balls = 0;
-			strikes = 0;
-			outs = 0;
-			changeInning = true;
-		} else if(outs < 0) // there can be no fewer than zero outs, set to zero instead
-			outs = 0;
-		// if the outs, strikes, or balls has changed, save the changes.
-		if(scoreBoard.outs != outs || scoreBoard.strikes != strikes || scoreBoard.balls != balls) {
-			if(changeInning) { // changing the inning will create a snapshot, so only create a snapshot here if not changing the inning
-				scoreBoard.nextHalfInning();
-			}
-			scoreBoard.outs = outs;
-			scoreBoard.strikes = strikes;
-			scoreBoard.balls = balls;
-		}
-	}
-    
-	function setHomeScore(score) {
-		if(score >= 0) { // teams may not have a score below zero
-			scoreBoard.homeScore = score;
-		}
-	}
-	
-	function setVisitorScore(score) {
-		if(score >= 0) { // teams may not have a score below zero
-			scoreBoard.visitorScore = score;
-		}
-	}
-	
-	function setInning(inning, isTop) {
-		if(inning > 0) { // the inning must be at least the first (1)
-			scoreBoard.inning = inning;
-			scoreBoard.isTopOfInning = isTop;
-		}
-	}
-	
+  // Listens for messages from the server to update the board.
 	socket.on('init', boardUpdate);
 	socket.on('boardUpdate', boardUpdate);
 	function boardUpdate(data) {
@@ -73,7 +24,9 @@ angular.module('scoreBoardApp', [])
 		}
 	}
 	
-  }])
+  }]) // end of the controller class
+
+  // Magic. Honestly I can't remember what this does.
   .factory('socket', function ($rootScope) {
   var socket = io.connect();
   return {

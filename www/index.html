@@ -137,45 +137,45 @@
 						</div>
 					</div>
 				</div>
-					<div class="row">
-						<p>
-						<div class="col-xs-offset-3 col-xs-6">
-							<button type="button" ng-click="scoreBoard.runnerOn(2)" class="btn btn-default btn-lg col-xs-12" aria-label="Second Base">
-								<span>2nd</span>
-								<span ng-class="{lightOff: scoreBoard.runnerOnSecond == false}" class="glyphicon glyphicon-stop" aria-hidden="true"></span>
-							</button>
-						</div>
-						</p>
-					</div>
-					<div class="row">
-						<p>
-						<div class="col-xs-5">
-							<button type="button" ng-click="scoreBoard.runnerOn(3)" class="btn btn-default btn-lg col-xs-12" aria-label="Third Base">
-								<span>3rd</span>
-								<span ng-class="{lightOff: scoreBoard.runnerOnThird == false}" class="glyphicon glyphicon-stop" aria-hidden="true"></span>
-							</button>
-						</div>
-						<div class="col-xs-2" style="padding-left: 0;padding-right: 0;">
-							<img src="img/runnerNone.png" ng-show="(!scoreBoard.runnerOnFirst && !scoreBoard.runnerOnSecond && !scoreBoard.runnerOnThird )" aria-label="No runners on" class="center-block" />
-							<img src="img/runner1.png" ng-show="(scoreBoard.runnerOnFirst && !scoreBoard.runnerOnSecond && !scoreBoard.runnerOnThird )" aria-label="Runner on first" class="center-block" />
-							<img src="img/runner2.png" ng-show="(!scoreBoard.runnerOnFirst && scoreBoard.runnerOnSecond && !scoreBoard.runnerOnThird )" aria-label="Runner on second" class="center-block" />
-							<img src="img/runner3.png" ng-show="(!scoreBoard.runnerOnFirst && !scoreBoard.runnerOnSecond && scoreBoard.runnerOnThird )" aria-label="Runner on third" class="center-block" />
-							<img src="img/runner12.png" ng-show="(scoreBoard.runnerOnFirst && scoreBoard.runnerOnSecond && !scoreBoard.runnerOnThird )" aria-label="Runners on first and second" class="center-block" />
-							<img src="img/runner13.png" ng-show="(scoreBoard.runnerOnFirst && !scoreBoard.runnerOnSecond && scoreBoard.runnerOnThird )" aria-label="Runners on first and third" class="center-block" />
-							<img src="img/runner23.png" ng-show="(!scoreBoard.runnerOnFirst && scoreBoard.runnerOnSecond && scoreBoard.runnerOnThird )" aria-label="Runners on second and third" class="center-block" />
-							<img src="img/runner123.png" ng-show="(scoreBoard.runnerOnFirst && scoreBoard.runnerOnSecond && scoreBoard.runnerOnThird )" aria-label="Based loaded" class="center-block" />
-						</div>
-						<div class="col-xs-5">
-							<button type="button" ng-click="scoreBoard.runnerOn(1)" class="btn btn-default btn-lg col-xs-12" aria-label="First Base">
-								<span>1st</span>
-								<span ng-class="{lightOff: scoreBoard.runnerOnFirst == false}" class="glyphicon glyphicon-stop" aria-hidden="true"></span>
-							</button>
-						</div>
-						</p>
-					</div>
 				<div class="row">
 					<p>
-					<div class="col-xs-12">
+					<div class="col-xs-offset-3 col-xs-6">
+						<button type="button" ng-click="scoreBoard.runnerOn(2)" class="btn btn-default btn-lg col-xs-12" aria-label="Second Base">
+							<span>2nd</span>
+							<span ng-class="{lightOff: scoreBoard.runnerOnSecond == false}" class="glyphicon glyphicon-stop" aria-hidden="true"></span>
+						</button>
+					</div>
+					</p>
+				</div>
+				<div class="row">
+					<p>
+					<div class="col-xs-5">
+						<button type="button" ng-click="scoreBoard.runnerOn(3)" class="btn btn-default btn-lg col-xs-12" aria-label="Third Base">
+							<span>3rd</span>
+							<span ng-class="{lightOff: scoreBoard.runnerOnThird == false}" class="glyphicon glyphicon-stop" aria-hidden="true"></span>
+						</button>
+					</div>
+					<div class="col-xs-2" style="padding-left: 0;padding-right: 0;">
+						<img src="img/runnerNone.png" ng-show="(!scoreBoard.runnerOnFirst && !scoreBoard.runnerOnSecond && !scoreBoard.runnerOnThird )" aria-label="No runners on" class="center-block" />
+						<img src="img/runner1.png" ng-show="(scoreBoard.runnerOnFirst && !scoreBoard.runnerOnSecond && !scoreBoard.runnerOnThird )" aria-label="Runner on first" class="center-block" />
+						<img src="img/runner2.png" ng-show="(!scoreBoard.runnerOnFirst && scoreBoard.runnerOnSecond && !scoreBoard.runnerOnThird )" aria-label="Runner on second" class="center-block" />
+						<img src="img/runner3.png" ng-show="(!scoreBoard.runnerOnFirst && !scoreBoard.runnerOnSecond && scoreBoard.runnerOnThird )" aria-label="Runner on third" class="center-block" />
+						<img src="img/runner12.png" ng-show="(scoreBoard.runnerOnFirst && scoreBoard.runnerOnSecond && !scoreBoard.runnerOnThird )" aria-label="Runners on first and second" class="center-block" />
+						<img src="img/runner13.png" ng-show="(scoreBoard.runnerOnFirst && !scoreBoard.runnerOnSecond && scoreBoard.runnerOnThird )" aria-label="Runners on first and third" class="center-block" />
+						<img src="img/runner23.png" ng-show="(!scoreBoard.runnerOnFirst && scoreBoard.runnerOnSecond && scoreBoard.runnerOnThird )" aria-label="Runners on second and third" class="center-block" />
+						<img src="img/runner123.png" ng-show="(scoreBoard.runnerOnFirst && scoreBoard.runnerOnSecond && scoreBoard.runnerOnThird )" aria-label="Based loaded" class="center-block" />
+					</div>
+					<div class="col-xs-5">
+						<button type="button" ng-click="scoreBoard.runnerOn(1)" class="btn btn-default btn-lg col-xs-12" aria-label="First Base">
+							<span>1st</span>
+							<span ng-class="{lightOff: scoreBoard.runnerOnFirst == false}" class="glyphicon glyphicon-stop" aria-hidden="true"></span>
+						</button>
+					</div>
+					</p>
+				</div>
+				<div class="row">
+					<p>
+					<div class="col-xs-offset-3 col-xs-6">
 						<button type="button" ng-click="scoreBoard.newBatter()" class="btn btn-default btn-lg col-xs-12" aria-label="New Batter">
 							New Batter
 						</button>
